@@ -6,8 +6,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>React Weather App</h2>
-        <p>Search here:</p>
         <Weather />
       </header>
     </div>

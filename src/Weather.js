@@ -1,63 +1,87 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
+// import axios from "axios"; //
+import "./App.css";
+import "./Weather.css";
 
 export default function Search() {
-  const [city, setCity] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [weather, setWeather] = useState({});
-
-  function displayWeather(response) {
-    setLoaded(true);
-    setWeather({
-      temperature: response.data.main.temp,
-      wind: response.data.wind.speed,
-      humidity: response.data.main.humidity,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
-      description: response.data.weather[0].description,
-    });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    let unit = "metric";
-    let apiKey = "515c9ddbeb3cda9061acfab71031839e";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
-    axios.get(apiUrl).then(displayWeather);
-  }
-
-  function updateCity(event) {
-    setCity(event.target.value);
-  }
-
-  let form = (
-    <div className="SearchEngine">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="search"
-          placeholder="Search for a city..."
-          onChange={updateCity}
-        />
-        <input type="submit" value="Search" />
-      </form>
+  return (
+    <div className="weatherApp">
+      <div className="Header">
+        <header>
+          <p className="dayAndTime">{"Last updated: Saturday, 13:31"}</p>
+          <form className="searchForm">
+            <input
+              type="search"
+              placeholder="Enter a city ..."
+              required
+              className="searchFormInput"
+            />
+            <input type="submit" value="Search" className="searchFormButton" />
+          </form>
+        </header>
+      </div>
+      <div className="Main">
+        <main>
+          <div className="weatherAppData">
+            <div className="weatherAppDetails">
+              <h1 className="weatherAppCity">Oslo</h1>
+              <p className="weatherDescription">Light rain</p>
+              <p>
+                Humidity: <span className="humidityData">72%</span>
+                <br />
+                Wind: <span className="windData">4.72 km/h</span>
+              </p>
+            </div>
+            <div className="weatherAppTemperatureContainer">
+              <div className="weatherAppTemperature">
+                <div className="weatherAppTemperatureValue">6</div>
+                <div className="weatherAppTemperatureUnit">°C</div>
+              </div>
+            </div>
+          </div>
+          <div className="weatherForecastHeading">
+            The next few days in [city]:
+          </div>
+          <div className="weatherForecast">This is where the forecast goes</div>
+        </main>
+      </div>
+      <div className="Footer">
+        <footer>
+          {"This project was coded by "}
+          <a
+            href="https://julie-makes-stuff.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Julie Didriksen
+          </a>
+          {", while she was listening to "}
+          <a
+            href="https://open.spotify.com/playlist/37i9dQZF1EIfEadw4iTGUl?si=de7d6ec8451d4322"
+            target="_blank"
+            rel="noreferrer"
+          >
+            this playlist.
+          </a>{" "}
+          It is open-sourced on{" "}
+          <a
+            href="https://github.com/jkdcode/react-weather-app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>{" "}
+          and hosted on{" "}
+          <a
+            href="https://greenweatherapp.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Netlify
+          </a>
+          .
+        </footer>
+      </div>
     </div>
   );
-
-  if (loaded) {
-    return (
-      <div>
-        {form}
-        <ul>
-          <li>Description: {weather.description}</li>
-          <li>Temperature: {Math.round(weather.temperature)}°C</li>
-          <li>Wind speed: {weather.wind} km/h</li>
-          <li>Humidity: {weather.humidity}%</li>
-          <li>
-            <img src={weather.icon} alt="Weather Icon" />{" "}
-          </li>
-        </ul>
-      </div>
-    );
-  } else {
-    return form;
-  }
 }
