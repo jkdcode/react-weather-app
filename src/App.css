@@ -16,7 +16,7 @@ main {
   padding: 30px 0;
 }
 
-.weatherApp {
+.App {
   background-color: var(--app-background-color);
   color: var(--primary-color);
   box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);
